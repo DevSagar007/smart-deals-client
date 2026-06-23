@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { AuthContext } from "./AuthContext";
 import { auth } from "../firebase/firebase.init.js";
@@ -25,11 +26,19 @@ function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  // Sign in google
   const singInWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
+  // Sign out google
+  const signOutUser = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
+
+  // useEffect on mount
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -44,6 +53,7 @@ function AuthProvider({ children }) {
     createUser,
     signInUser,
     singInWithGoogle,
+    signOutUser,
     user,
     loading,
   };

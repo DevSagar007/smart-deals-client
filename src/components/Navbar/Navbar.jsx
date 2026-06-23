@@ -4,7 +4,19 @@ import { use } from "react";
 import HeaderLogo from "../../assets/logo.png";
 
 function Navbar() {
-  const { user } = use(AuthContext);
+  const { user, signOutUser } = use(AuthContext);
+
+  // handle signout
+  const handleGoogleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        console.log("User signed out");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -64,7 +76,9 @@ function Navbar() {
         <div className="navbar-end flex gap-4">
           {user ? (
             <>
-              <button className="btn">Logout</button>
+              <button onClick={handleGoogleSignOut} className="btn">
+                Logout
+              </button>
             </>
           ) : (
             <>
