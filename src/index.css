@@ -11,3 +11,59 @@
     --color-primary: #632EE3;
     --color-secondary: #9F62F2;
 }
+
+.primary-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg,
+            var(--color-primary),
+            var(--color-secondary));
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.primary-outline-btn {
+    position: relative;
+    padding: 14px 24px;
+    border: 1.5px solid transparent;
+    border-radius: 8px;
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(135deg,
+            var(--color-primary),
+            var(--color-secondary)) border-box;
+    color: var(--color-primary);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    overflow: hidden;
+    text-align: center;
+}
+
+.primary-outline-btn:hover {
+    color: #fff;
+    background:
+        linear-gradient(135deg,
+            var(--color-primary),
+            var(--color-secondary)) padding-box,
+        linear-gradient(135deg,
+            var(--color-primary),
+            var(--color-secondary)) border-box;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(99, 46, 227, 0.25);
+}
+
+.primary-btn:active {
+    transform: translateY(-1px);
+}
+
+.primary-btn:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 4px rgba(99, 46, 227, 0.15),
+        0 10px 25px rgba(99, 46, 227, 0.25);
+}
