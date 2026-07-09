@@ -7,14 +7,15 @@ const MyBids = () => {
   const [bids, setBids] = useState([]);
   console.log("bids", bids);
   console.log("user check", user);
-  console.log('token', user.accessToken)
+  console.log("token", user.accessToken);
 
   useEffect(() => {
     if (user?.email) {
       fetch(`http://localhost:3000/bids?.=${user.email}`, {
+        // fetch(`http://localhost:3000/bids?.=email=dev@gmail.com`, {
         headers: {
-          authorization: `Bearer ${user.accessToken}`
-        }
+          authorization: `Bearer ${user.accessToken}`,
+        },
       })
         .then((res) => res.json())
         .then((data) => {
@@ -48,9 +49,9 @@ const MyBids = () => {
                 text: "Your file has been deleted.",
                 icon: "success",
               });
-              // reaming bids 
-              const reamingBids = bids.filter(bid => bid._id !== _id)
-              setBids(reamingBids)
+              // reaming bids
+              const reamingBids = bids.filter((bid) => bid._id !== _id);
+              setBids(reamingBids);
             }
           });
       console.log("Now delete");
