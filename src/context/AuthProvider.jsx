@@ -9,7 +9,6 @@ import {
 import { AuthContext } from "./AuthContext";
 import { auth } from "../firebase/firebase.init.js";
 import { useEffect, useState } from "react";
-
 const googleProvider = new GoogleAuthProvider();
 
 function AuthProvider({ children }) {
@@ -42,7 +41,23 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      console.log("current user", currentUser);
       setLoading(false);
+      if (currentUser) {
+        const loggedUser = {email: currentUser.email}
+
+        fetch("http://localhost:3000/getToken", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loggedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after getting token", data);
+          });
+      }
     });
     return () => {
       unSubscribe();
