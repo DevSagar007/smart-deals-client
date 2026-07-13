@@ -44,7 +44,7 @@ function AuthProvider({ children }) {
       console.log("current user", currentUser);
       setLoading(false);
       if (currentUser) {
-        const loggedUser = {email: currentUser.email}
+        const loggedUser = { email: currentUser.email };
 
         fetch("http://localhost:3000/getToken", {
           method: "POST",
@@ -56,7 +56,10 @@ function AuthProvider({ children }) {
           .then((res) => res.json())
           .then((data) => {
             console.log("after getting token", data);
+            localStorage.setItem("token", data?.token);
           });
+      } else {
+        localStorage.removeItem("token");
       }
     });
     return () => {
