@@ -25,6 +25,9 @@ function Navbar() {
       <li>
         <NavLink to="/allProducts">All Product</NavLink>
       </li>
+      <li>
+        <NavLink to="/CreateAProduct">Create a Product</NavLink>
+      </li>
       {user && (
         <>
           <li>
