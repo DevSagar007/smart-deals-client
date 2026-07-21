@@ -1,30 +1,46 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
 
 const MyBids = () => {
   const { user } = use(AuthContext);
   const [bids, setBids] = useState([]);
+  const axiosSecure = useAxiosSecure();
   console.log("bids", bids);
   console.log("user check", user);
-  console.log("token", user.accessToken);
+  console.log("token", user?.accessToken);
 
-  useEffect(() => {
-    if (user?.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`, {
-        // fetch(`http://localhost:3000/bids?.=email=dev@gmail.com`, {
-        headers: {
-          // authorization: `Bearer ${user.accessToken}`,
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+  useEffect (() => {
+    if (!user?.email) return;
+
+    axiosSecure
+      .get(`/bids?email=${user.email}`)
+      .then((data) => {
+        setBids(data.data);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("my bids data", data);
-          setBids(data);
-        });
-    }
-  }, [user?.email]);
+      .catch((error) => {
+        console.error("Failed to load bids", error);
+      });
+  },[user?.email, axiosSecure])
+
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //       // fetch(`http://localhost:3000/bids?.=email=dev@gmail.com`, {
+  //       headers: {
+  //         // authorization: `Bearer ${user.accessToken}`,
+  //         authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log("my bids data", data);
+  //         setBids(data);
+  //       });
+  //   }
+  // }, [user?.email]);
 
   const handleDeleteBid = (_id) => {
     console.log(_id);
